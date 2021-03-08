@@ -1,27 +1,27 @@
 <?php
 
-namespace Tests;
+namespace EscolaLms\Core\Tests;
 
-use App\Enum\UserRole;
-use App\Models\User;
+use EscolaLms\Core\Enum\UserRole;
+use EscolaLms\Core\Models\User;
 
 trait CreatesUsers
 {
-    protected function makeStudent(array $data = [], bool $create = true): User
+    private function makeStudent(array $data = [], bool $create = true): User
     {
         $user = $this->create($data, $create);
         $user->assignRole(UserRole::STUDENT);
         return $user;
     }
 
-    protected function makeInstructor(array $data = [], bool $create = true): User
+    private function makeInstructor(array $data = [], bool $create = true): User
     {
         $user = $this->create($data, $create);
         $user->assignRole(UserRole::INSTRUCTOR);
         return $user;
     }
 
-    protected function makeAdmin(array $data = [], bool $create = true): User
+    private function makeAdmin(array $data = [], bool $create = true): User
     {
         $user = $this->create($data, $create);
         $user->assignRole(UserRole::ADMIN);
@@ -30,11 +30,10 @@ trait CreatesUsers
 
     private function create(array $data = [], bool $create = true): User
     {
-        if ($create) {
-            $user = factory(User::class)->create($data);
-        } else {
-            $user = factory(User::class)->make($data);
+        if (!$create) {
+            return User::factory()->make($data);
         }
-        return $user;
+
+        return User::factory()->create($data);
     }
 }
