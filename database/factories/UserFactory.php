@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\EscolaSoft\EscolaLms\Models;
+namespace Database\Factories\EscolaLms\Core\Models;
 
 use Carbon\Carbon;
 use EscolaLms\Core\Models\User;
