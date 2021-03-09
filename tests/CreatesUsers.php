@@ -3,7 +3,7 @@
 namespace EscolaLms\Core\Tests;
 
 use EscolaLms\Core\Enums\UserRole;
-use EscolaLms\Core\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable as User;
 
 trait CreatesUsers
 {
@@ -31,9 +31,9 @@ trait CreatesUsers
     private function create(array $data = [], bool $create = true): User
     {
         if (!$create) {
-            return User::factory()->make($data);
+            return config('auth.providers.users.model')::factory()->make($data);
         }
 
-        return User::factory()->create($data);
+        return config('auth.providers.users.model')::factory()->create($data);
     }
 }
