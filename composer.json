@@ -1,7 +1,7 @@
 {
   "name": "escolalms/core",
   "description": "Escola Headless LMS",
-  "type": "project",
+  "type": "package",
   "require": {
     "php": "^7.4",
     "laravel/framework": "^8.0",
