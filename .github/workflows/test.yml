@@ -1,0 +1,37 @@
+name: tests
+
+on: [ pull_request ]
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+    container:
+      image: escolasoft1/laravel-prod-docker:fpm
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: database
+          MYSQL_PASSWORD: password
+          MYSQL_USER: username
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Instantiate package
+        uses: actions/checkout@v2
+
+      - name: Update composer
+        run: composer update
+
+      - name: Clear config
+        run: vendor/bin/testbench config:clear
+
+      - name: Publish things
+        run: vendor/bin/testbench migrate:fresh
+
+      - name: Run tests
+        run: vendor/bin/phpunit
