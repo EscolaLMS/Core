@@ -32,8 +32,9 @@ class EscolaLmsServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->loadConfig();
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrations();
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'escola-lms');
         $this->registerComponents();
     }
@@ -41,5 +42,27 @@ class EscolaLmsServiceProvider extends ServiceProvider
     private function registerComponents(): void
     {
         Blade::componentNamespace('EscolaSoft\\EscolaLms\\View\\Components\\Forms', 'escola-form');
+    }
+
+    private function loadConfig(): void
+    {
+        $this->publishes([
+            __DIR__ . '/config.php' => config_path('escolalms/core.php')
+        ], 'escolalms');
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/config.php', 'escolalms.core'
+        );
+    }
+
+    private function loadMigrations(): void
+    {
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations')
+        ], 'escolalms');
+
+        if (!config('escolalms.core.ignore_migrations')) {
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        }
     }
 }

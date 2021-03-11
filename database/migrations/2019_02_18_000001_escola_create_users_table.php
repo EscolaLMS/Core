@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use EscolaLms\Core\Migrations\EscolaMigration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class EscolaCreateUsersTable extends EscolaMigration
 {
-
     /**
      * Run the migrations.
      *
@@ -14,7 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        $this->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');

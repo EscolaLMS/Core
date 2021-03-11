@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use EscolaLms\Core\Migrations\EscolaMigration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAttachmentsTable extends Migration
+class CreateAttachmentsTable extends EscolaMigration
 {
 
     /**
@@ -14,7 +14,7 @@ class CreateAttachmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('attachments', function (Blueprint $table) {
+        $this->create('attachments', function (Blueprint $table) {
             $table->id();
             $table->string('path');
             $table->string('filename');
