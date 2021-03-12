@@ -22,5 +22,6 @@ class TestCase extends OrchestraTestCase
     {
         // Setup default database to use sqlite :memory:
         $app['config']->set('auth.providers.users.model', User::class);
+        $app['config']->set('passport.client_uuids', true);
     }
 }
