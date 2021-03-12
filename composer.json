@@ -3,7 +3,7 @@
     "description": "Escola Headless LMS",
     "type": "package",
     "require": {
-        "php": "^7.4",
+        "php": "^7.3|^7.4|^8",
         "laravel/framework": ">=7.0",
         "bensampo/laravel-enum": "3.x",
         "spatie/laravel-permission": "^3.18",
