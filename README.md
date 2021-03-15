@@ -1,4 +1,9 @@
 # Core
+
+[![codecov](https://codecov.io/gh/EscolaLMS/Core/branch/main/graph/badge.svg?token=SBAWWVF5QX)](https://codecov.io/gh/EscolaLMS/Core) 
+[![phpunit](https://github.com/EscolaLMS/Core/actions/workflows/test.yml/badge.svg)](https://github.com/EscolaLMS/Core/actions/workflows/test.yml)
+
+
 Escola LMS Core Package
 
 Package contains all basic classes and features used in Escola LMS, and it's obligatory to work with any other LMS package.
