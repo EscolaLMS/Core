@@ -1,6 +1,9 @@
 name: Generate Swagger Documentation
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   phpunit-code-coverage:
