@@ -32,7 +32,7 @@ jobs:
         uses: pjoc-team/swagger-ui-action@v0.0.2
         with:
           dir: "./"
-          pattern: "*.json"
+          pattern: "openapi.json"
           debug: "true"
 
       - name: Install git
