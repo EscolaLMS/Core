@@ -14,8 +14,7 @@
     "orchestra/testbench": ">=5.0"
   },
   "license": "MIT",
-  "authors": [
-    {
+  "authors": [{
       "name": "Marcin Lenkowski",
       "email": "marcin.lenkowski@escola.pl"
     },

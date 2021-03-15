@@ -51,7 +51,8 @@ class EscolaLmsServiceProvider extends ServiceProvider
         ], 'escolalms');
 
         $this->mergeConfigFrom(
-            __DIR__ . '/config.php', 'escolalms.core'
+            __DIR__ . '/config.php',
+            'escolalms.core'
         );
     }
 
