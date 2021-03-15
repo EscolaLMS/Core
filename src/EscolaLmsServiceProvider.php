@@ -36,12 +36,6 @@ class EscolaLmsServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
         $this->loadMigrations();
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'escola-lms');
-        $this->registerComponents();
-    }
-
-    private function registerComponents(): void
-    {
-        Blade::componentNamespace('EscolaSoft\\EscolaLms\\View\\Components\\Forms', 'escola-form');
     }
 
     private function loadConfig(): void
