@@ -131,7 +131,7 @@ abstract class BaseRepository implements BaseRepositoryContract, UserableReposit
         return $query;
     }
 
-    public function applyPaginationDto($query, PaginationDto $dto)
+    public function applyPaginationDto($query, PaginationDto $dto): Builder
     {
         if (!is_null($dto->getSkip())) {
             $query->skip($dto->getSkip());
@@ -161,7 +161,7 @@ abstract class BaseRepository implements BaseRepositoryContract, UserableReposit
         return $query->orderBy($orderColumn, $orderDirection)->get($columns);
     }
 
-    public function allPaginated(array $search = [], PaginationDto $pagination, array $columns = ['*'])
+    public function allPaginated(PaginationDto $pagination, array $search = [], array $columns = ['*'])
     {
         return $this->all($search, $pagination->getSkip(), $pagination->getLimit(), $columns);
     }
