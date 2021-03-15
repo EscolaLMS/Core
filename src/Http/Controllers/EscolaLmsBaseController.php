@@ -9,6 +9,19 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
 use InfyOm\Generator\Utils\ResponseUtil;
 
+/**
+ * @OA\Info(title="Get Kibble", version="0.0.1")
+ *
+ * @OA\SecurityScheme(
+ *      securityScheme="passport",
+ *      in="header",
+ *      name="bearerAuth",
+ *      type="http",
+ *      scheme="bearer",
+ *      bearerFormat="JWT",
+ * )
+ */
+
 class EscolaLmsBaseController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
