@@ -19,7 +19,7 @@ interface BaseRepositoryContract
 
     public function all(array $search = [], ?int $skip = null, ?int $limit = null, array $columns = ['*'], string $orderDirection = 'asc', string $orderColumn = 'id');
 
-    public function allPaginated(array $search = [], PaginationDto $pagination, array $columns = ['*']);
+    public function allPaginated(PaginationDto $pagination, array $search = [], array $columns = ['*']);
 
     public function allWithOrder(array $search = [], ?int $skip = null, ?int $limit = null, ?string $orderBy = null, string $direction = 'asc', array $columns = ['*']);
 
@@ -56,4 +56,6 @@ interface BaseRepositoryContract
     public function likeParam(string $query): array;
 
     public function patch(CompareDtoContract $dto): Model;
+
+    public function applyPaginationDto($query, PaginationDto $dto): Builder;
 }

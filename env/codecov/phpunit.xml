@@ -20,4 +20,10 @@
         <env name="DB_USERNAME" value="username"/>
         <env name="DB_PASSWORD" value="password"/>
     </php>
+    <coverage cacheDirectory=".phpunit.cache/code-coverage"
+              processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+    </coverage>
 </phpunit>
