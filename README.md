@@ -3,6 +3,8 @@
 [![codecov](https://codecov.io/gh/EscolaLMS/Core/branch/main/graph/badge.svg?token=SBAWWVF5QX)](https://codecov.io/gh/EscolaLMS/Core) 
 [![phpunit](https://github.com/EscolaLMS/Core/actions/workflows/test.yml/badge.svg)](https://github.com/EscolaLMS/Core/actions/workflows/test.yml)
 
+[![swagger](https://validator.swagger.io/validator?url=https%3A%2F%2Fescolalms.github.io%2FCore%2Fapis%2Fopenapi.json)](https://escolalms.github.io/Core/)
+
 
 Escola LMS Core Package
 
