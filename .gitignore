@@ -4,3 +4,5 @@ composer.lock
 /docker
 .phpunit.cache
 coverage.xml
+openapi.yaml
+openapi.json
