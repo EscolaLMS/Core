@@ -23,15 +23,16 @@ class RoleTableSeeder extends Seeder
             $this->createPermissionWithName($permission);
         }
 
-        Role::create(['name' => UserRole::STUDENT]);
-        $instructor = Role::create(['name' => UserRole::INSTRUCTOR]);
+        Role::findOrCreate(UserRole::STUDENT, 'api');
+
+        $instructor = Role::findOrCreate(UserRole::TUTOR, 'api');
         $instructor->givePermissionTo($instructorPermissions);
-        $admin = Role::create(['name' => UserRole::ADMIN]);
+        $admin = Role::findOrCreate(UserRole::ADMIN, 'api');
         $admin->givePermissionTo($adminPermissions);
     }
 
     public function createPermissionWithName(string $name)
     {
-        Permission::create(['name' => $name]);
+        return Permission::findOrCreate($name, 'api');
     }
 }
