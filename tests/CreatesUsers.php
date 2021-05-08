@@ -17,7 +17,7 @@ trait CreatesUsers
     private function makeInstructor(array $data = [], bool $create = true): User
     {
         $user = $this->create($data, $create);
-        $user->assignRole(UserRole::INSTRUCTOR);
+        $user->assignRole(UserRole::TUTOR);
         return $user;
     }
 
