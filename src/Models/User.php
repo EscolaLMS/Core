@@ -61,4 +61,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->path_avatar ? Storage::url('storage/users/' . $this->path_avatar) : null;
     }
+
+    public function guardName(): string
+    {
+        return 'api';
+    }
 }
