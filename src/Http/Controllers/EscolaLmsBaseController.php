@@ -7,7 +7,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
-use InfyOm\Generator\Utils\ResponseUtil;
 
 class EscolaLmsBaseController extends Controller
 {
@@ -15,12 +14,21 @@ class EscolaLmsBaseController extends Controller
 
     public function sendResponse($result, $message)
     {
-        return Response::json(ResponseUtil::makeResponse($message, $result));
+        return Response::json([
+            'success' => true,
+            'data'    => $result,
+            'message' => $message,
+        ]);
     }
 
     public function sendError($error, $code = 404)
     {
-        return Response::json(ResponseUtil::makeError($error), $code);
+        return Response::json([
+                'success' => false,
+                'message' => $error,
+            ],
+            $code
+        );
     }
 
     public function sendSuccess($message)
