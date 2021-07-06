@@ -33,7 +33,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $appends = [
-        'onboarding_completed',
         'avatar_url',
     ];
 
