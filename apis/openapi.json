@@ -12,7 +12,7 @@
                 ],
                 "summary": "Store a attachment as file in storage",
                 "description": "Store Image",
-                "operationId": "EscolaLms\\Core\\Http\\Controllers\\Swagger\\AttachmentAPISwaggerInterface::store",
+                "operationId": "d7df2b108c4a6fb0c08483a4b45c6445",
                 "requestBody": {
                     "required": true,
                     "content": {
