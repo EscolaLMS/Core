@@ -29,7 +29,7 @@ class EscolaLmsBaseController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function sendResponse(mixed $data, string $message, int $code = 200): JsonResponse
+    public function sendResponse(mixed $data, string $message = '', int $code = 200): JsonResponse
     {
         $body = [
             'success' => $code >= 200 && $code < 300,
@@ -41,12 +41,12 @@ class EscolaLmsBaseController extends Controller
         return Response::json($body, $code);
     }
 
-    public function sendError(string $error, int $code = 404): JsonResponse
+    public function sendError(string $error = '', int $code = 404): JsonResponse
     {
         return $this->sendResponse(null, $error, $code);
     }
 
-    public function sendSuccess(string $message, int $code = 200): JsonResponse
+    public function sendSuccess(string $message = '', int $code = 200): JsonResponse
     {
         return $this->sendResponse(null, $message, $code);
     }
