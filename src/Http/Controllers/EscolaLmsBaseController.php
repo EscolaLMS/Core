@@ -29,7 +29,7 @@ class EscolaLmsBaseController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function sendResponse(mixed $data, string $message = '', int $code = 200): JsonResponse
+    public function sendResponse( /*mixed*/ $data, string $message = '', int $code = 200): JsonResponse 
     {
         $body = [
             'success' => $code >= 200 && $code < 300,
