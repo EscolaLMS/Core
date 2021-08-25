@@ -48,6 +48,17 @@ class EscolaLmsServiceProvider extends ServiceProvider
             __DIR__ . '/config.php',
             'escolalms.core'
         );
+        
+        $config = $this->app->make('config');
+        $config->set('auth.guards', array_merge(
+            [
+                'api' => [
+                    'driver' => 'passport',
+                    'provider' => 'users',
+                ],
+            ],
+            $config->get('auth.guards', [])
+        ));
     }
 
     private function loadMigrations(): void
