@@ -4,6 +4,7 @@ namespace EscolaLms\Core\Tests;
 
 use EscolaLms\Core\EscolaLmsServiceProvider;
 use EscolaLms\Core\Models\User;
+use Laravel\Passport\PassportServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
@@ -15,7 +16,10 @@ class TestCase extends OrchestraTestCase
 
     protected function getPackageProviders($app)
     {
-        return [EscolaLmsServiceProvider::class];
+        return [
+            EscolaLmsServiceProvider::class,
+            PassportServiceProvider::class,
+        ];
     }
 
     protected function getEnvironmentSetUp($app)
