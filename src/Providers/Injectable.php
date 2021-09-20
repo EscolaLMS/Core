@@ -3,7 +3,7 @@
 namespace EscolaLms\Core\Providers;
 
 /**
- * @deprecated 0.2
+ * @deprecated 1.1.0
  */
 trait Injectable
 {

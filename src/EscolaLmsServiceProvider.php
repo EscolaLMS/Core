@@ -2,19 +2,10 @@
 
 namespace EscolaLms\Core;
 
-use EscolaLms\Core\Repositories\ConfigRepository;
-use EscolaLms\Core\Repositories\Contracts\ConfigRepositoryContract;
-use EscolaLms\Core\Services\ConfigService;
-use EscolaLms\Core\Services\Contracts\ConfigServiceContract;
 use Illuminate\Support\ServiceProvider;
 
 class EscolaLmsServiceProvider extends ServiceProvider
 {
-    public array $bindings = [
-        ConfigRepositoryContract::class => ConfigRepository::class,
-        ConfigServiceContract::class => ConfigService::class
-    ];
-
     public function register()
     {
     }
