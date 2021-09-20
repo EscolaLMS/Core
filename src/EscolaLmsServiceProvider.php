@@ -2,7 +2,6 @@
 
 namespace EscolaLms\Core;
 
-use EscolaLms\Core\Providers\Injectable;
 use EscolaLms\Core\Repositories\ConfigRepository;
 use EscolaLms\Core\Repositories\Contracts\ConfigRepositoryContract;
 use EscolaLms\Core\Services\ConfigService;
@@ -11,16 +10,13 @@ use Illuminate\Support\ServiceProvider;
 
 class EscolaLmsServiceProvider extends ServiceProvider
 {
-    use Injectable;
-
-    private const CONTRACTS = [
+    public array $bindings = [
         ConfigRepositoryContract::class => ConfigRepository::class,
         ConfigServiceContract::class => ConfigService::class
     ];
 
     public function register()
     {
-        $this->injectContract(self::CONTRACTS);
     }
 
     public function boot()

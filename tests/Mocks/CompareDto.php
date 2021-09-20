@@ -1,6 +1,6 @@
 <?php
 
-namespace EscolaLms\Core\Tests\Repositories;
+namespace EscolaLms\Core\Tests\Mocks;
 
 use EscolaLms\Core\Dtos\Contracts\CompareDtoContract;
 
