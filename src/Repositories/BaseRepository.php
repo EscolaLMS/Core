@@ -2,14 +2,14 @@
 
 namespace EscolaLms\Core\Repositories;
 
-use EscolaLms\Core\Repositories\Contracts\UserableRepositoryContract;
-use Illuminate\Contracts\Auth\Authenticatable as User;
-use EscolaLms\Core\Repositories\Criteria\Criterion;
 use EscolaLms\Core\Dtos\Contracts\CompareDtoContract;
 use EscolaLms\Core\Dtos\Contracts\DtoContract;
 use EscolaLms\Core\Dtos\PaginationDto;
 use EscolaLms\Core\Repositories\Contracts\BaseRepositoryContract;
+use EscolaLms\Core\Repositories\Contracts\UserableRepositoryContract;
+use EscolaLms\Core\Repositories\Criteria\Criterion;
 use Illuminate\Container\Container as Application;
+use Illuminate\Contracts\Auth\Authenticatable as User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -397,7 +397,7 @@ abstract class BaseRepository implements BaseRepositoryContract, UserableReposit
 
     public function count(): int
     {
-        $this->model->newQuery()->count();
+        return $this->model->newQuery()->count();
     }
 
     public function countByCriteria(array $criteria): int

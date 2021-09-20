@@ -6,6 +6,7 @@ use EscolaLms\Core\EscolaLmsServiceProvider;
 use EscolaLms\Core\Models\User;
 use Laravel\Passport\PassportServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\Permission\PermissionServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
@@ -17,6 +18,7 @@ class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
+            PermissionServiceProvider::class,
             EscolaLmsServiceProvider::class,
             PassportServiceProvider::class,
         ];

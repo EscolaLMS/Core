@@ -7,7 +7,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
@@ -29,7 +31,7 @@ class EscolaLmsBaseController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function sendResponse( /*mixed*/ $data, string $message = '', int $code = 200): JsonResponse 
+    public function sendResponse($data, string $message = '', int $code = 200): JsonResponse
     {
         $body = [
             'success' => $code >= 200 && $code < 300,
@@ -56,9 +58,7 @@ class EscolaLmsBaseController extends Controller
         $request = request();
         $wrappedResource = $resource->resource;
         if ($wrappedResource instanceof LengthAwarePaginator) {
-            $meta = $wrappedResource->toArray();
-            unset($meta['data']);
-            return $this->sendResponseWithMeta($resource->toArray($request), $meta, $message);
+            return $this->sendResponseForWrappedPaginator($request, $resource, $message);
         }
         if ($wrappedResource instanceof Model && $wrappedResource->wasRecentlyCreated) {
             return $this->sendResponse($resource->toArray($request), $message, 201);
@@ -66,12 +66,25 @@ class EscolaLmsBaseController extends Controller
         return $this->sendResponse($resource->toArray($request), $message);
     }
 
+    private function sendResponseForWrappedPaginator(Request $request, JsonResource $resource, string $message = ''): JsonResponse
+    {
+        $wrappedResource = $resource->resource;
+        $meta = $wrappedResource->toArray();
+        if ($resource instanceof ResourceCollection) {
+            $data = $resource->toArray($request);
+        } else {
+            $data = $meta['data'];
+        }
+        unset($meta['data']);
+        return $this->sendResponseWithMeta($data, $meta, $message);
+    }
+
     public function sendResponseWithMeta(array $data, array $meta, string $message = '', int $code = 200): JsonResponse
     {
         return Response::json([
             'success' => $code >= 200 && $code < 300,
             'data'    => $data,
-            'meta' => $meta,
+            'meta'    => $meta,
             'message' => $message,
         ], $code);
     }

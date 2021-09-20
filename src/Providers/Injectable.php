@@ -2,6 +2,9 @@
 
 namespace EscolaLms\Core\Providers;
 
+/**
+ * @deprecated 0.2
+ */
 trait Injectable
 {
     private function injectContract(array $contracts): void
