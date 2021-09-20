@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -57,19 +58,25 @@ class EscolaLmsBaseController extends Controller
         $request = request();
         $wrappedResource = $resource->resource;
         if ($wrappedResource instanceof LengthAwarePaginator) {
-            $meta = $wrappedResource->toArray();
-            if ($resource instanceof ResourceCollection) {
-                $data = $resource->toArray($request);
-            } else {
-                $data = $meta['data'];
-            }
-            unset($meta['data']);
-            return $this->sendResponseWithMeta($data, $meta, $message);
+            return $this->sendResponseForWrappedPaginator($request, $resource, $message);
         }
         if ($wrappedResource instanceof Model && $wrappedResource->wasRecentlyCreated) {
             return $this->sendResponse($resource->toArray($request), $message, 201);
         }
         return $this->sendResponse($resource->toArray($request), $message);
+    }
+
+    private function sendResponseForWrappedPaginator(Request $request, JsonResource $resource, string $message = ''): JsonResponse
+    {
+        $wrappedResource = $resource->resource;
+        $meta = $wrappedResource->toArray();
+        if ($resource instanceof ResourceCollection) {
+            $data = $resource->toArray($request);
+        } else {
+            $data = $meta['data'];
+        }
+        unset($meta['data']);
+        return $this->sendResponseWithMeta($data, $meta, $message);
     }
 
     public function sendResponseWithMeta(array $data, array $meta, string $message = '', int $code = 200): JsonResponse
