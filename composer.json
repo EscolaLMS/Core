@@ -14,13 +14,18 @@
     "orchestra/testbench": ">=5.0"
   },
   "license": "MIT",
-  "authors": [{
+  "authors": [
+    {
       "name": "Marcin Lenkowski",
       "email": "marcin.lenkowski@escola.pl"
     },
     {
       "name": "Mateusz Wojczal",
       "email": "mateusz.wojczal@escola.pl"
+    },
+    {
+      "name": "Paweł Chołaj",
+      "email": "pawel.cholaj@escolasoft.com"
     }
   ],
   "autoload": {
@@ -29,7 +34,6 @@
       "EscolaLms\\Core\\Tests\\": "tests",
       "Database\\Factories\\EscolaLms\\Core\\Models\\": "database/factories",
       "EscolaLms\\Core\\Database\\Seeders\\": "database/seeders"
-
     }
   },
   "extra": {
