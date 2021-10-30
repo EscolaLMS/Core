@@ -5,9 +5,8 @@
 [![downloads](https://img.shields.io/packagist/dt/escolalms/core)](https://packagist.org/packages/escolalms/core)
 [![downloads](https://img.shields.io/packagist/v/escolalms/core)](https://packagist.org/packages/escolalms/core)
 [![downloads](https://img.shields.io/packagist/l/escolalms/core)](https://packagist.org/packages/escolalms/core)
-
-Swagger: [![swagger](https://validator.swagger.io/validator?url=https%3A%2F%2Fescolalms.github.io%2FCore%2Fapis%2Fopenapi.json)](https://escolalms.github.io/Core/)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/382375bb6a8ee96d9875/maintainability)](https://codeclimate.com/github/EscolaLMS/Core/maintainability)
+[![swagger](https://img.shields.io/badge/documentation-swagger-green)](https://escolalms.github.io/Core/)
 
 Escola LMS Core Package
 
