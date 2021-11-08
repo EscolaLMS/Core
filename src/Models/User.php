@@ -65,4 +65,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return 'api';
     }
+
+    public function getMorphClass()
+    {
+        return config('auth.providers.users.model', self::class);
+    }
 }
