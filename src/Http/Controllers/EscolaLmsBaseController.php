@@ -15,7 +15,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
 
 /**
- * @OA\Info(title="Get Kibble", version="0.0.1")
+ * @OA\Info(title="EscolaLMS", version="0.0.1")
  *
  * @OA\SecurityScheme(
  *      securityScheme="passport",
