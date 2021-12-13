@@ -15,7 +15,6 @@ class EscolaLmsServiceProvider extends ServiceProvider
         $this->loadConfig();
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
         $this->loadMigrations();
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'escola-lms');
     }
 
     private function loadConfig(): void
