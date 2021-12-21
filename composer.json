@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.4",
     "bensampo/laravel-enum": ">=2.0",
-    "composer/composer": "^2.1",
+    "composer/composer": "^2.0",
     "laravel/framework": ">=7.0",
     "laravel/passport": ">=9.0",
     "spatie/laravel-permission": "^3.18"
