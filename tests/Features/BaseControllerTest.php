@@ -4,6 +4,7 @@ namespace EscolaLms\Core\Tests\Features;
 
 use EscolaLms\Core\Http\Controllers\EscolaLmsBaseController;
 use EscolaLms\Core\Models\User;
+use EscolaLms\Core\Tests\Mocks\TestController;
 use EscolaLms\Core\Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,7 +19,7 @@ class BaseControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->controller = app(EscolaLmsBaseController::class);
+        $this->controller = app(TestController::class);
     }
 
     public function testSendResponse()
