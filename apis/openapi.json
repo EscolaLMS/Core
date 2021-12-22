@@ -1,34 +1,18 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Get Kibble",
+        "title": "EscolaLMS",
         "version": "0.0.1"
     },
     "paths": {
-        "/api/attachments": {
-            "post": {
+        "/api/core/packages": {
+            "get": {
                 "tags": [
-                    "Attachments"
+                    "Core Admin"
                 ],
-                "summary": "Store a attachment as file in storage",
-                "description": "Store Image",
-                "operationId": "d7df2b108c4a6fb0c08483a4b45c6445",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "properties": {
-                                    "file": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
+                "summary": "List installed escolalms packages",
+                "description": "List of installed escolalms packages with versions",
+                "operationId": "699ad377e3d00475b71a13ffd3b3e067",
                 "responses": {
                     "200": {
                         "description": "successful operation",
