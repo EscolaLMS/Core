@@ -6,3 +6,5 @@ composer.lock
 coverage.xml
 openapi.yaml
 openapi.json
+.env
+.idea
