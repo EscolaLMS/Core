@@ -3,8 +3,11 @@
 namespace EscolaLms\Core\Tests\Features;
 
 use EscolaLms\Core\Dtos\PaginationDto;
+use EscolaLms\Core\Enums\UserRole;
 use EscolaLms\Core\Models\User;
+use EscolaLms\Core\Repositories\Criteria\Primitives\DoesntHasCriterion;
 use EscolaLms\Core\Repositories\Criteria\Primitives\EqualCriterion;
+use EscolaLms\Core\Repositories\Criteria\Primitives\HasCriterion;
 use EscolaLms\Core\Repositories\Criteria\Primitives\ModelCriterion;
 use EscolaLms\Core\Repositories\Criteria\UserCriterion;
 use EscolaLms\Core\Repositories\Criteria\UserSearchCriterion;
@@ -36,6 +39,7 @@ class BaseRepositoryTest extends TestCase
             'last_name' => $this->faker->lastName . $this->faker->numberBetween(),
             'country' => 'Old Country'
         ]);
+        $this->user->assignRole(UserRole::ADMIN);
         $users = User::factory()->count(8)->create();
         $this->last_user = User::factory()->create();
     }
@@ -207,6 +211,29 @@ class BaseRepositoryTest extends TestCase
         $result = $this->repository->searchByCriteria($criteria);
         $this->assertCount(1, $result);
         $this->assertEquals($this->user->getKey(), $result->first()->getKey());
+    }
+
+    public function testSearchByRoles()
+    {
+        $criteria = [
+            new HasCriterion('roles', fn ($query) => $query->where('name', UserRole::ADMIN))
+        ];
+        $result = $this->repository->searchByCriteria($criteria);
+        $this->assertCount(1, $result);
+        $this->assertEquals($this->user->getKey(), $result->first()->getKey());
+
+        $criteria = [
+            new HasCriterion('roles', fn ($query) => $query->where('name', UserRole::STUDENT))
+        ];
+        $result = $this->repository->searchByCriteria($criteria);
+        $this->assertCount(0, $result);
+
+        $this->last_user->assignRole(UserRole::STUDENT);
+        $criteria = [
+            new DoesntHasCriterion('roles', fn ($query) => $query->where('name', UserRole::STUDENT))
+        ];
+        $result = $this->repository->searchByCriteria($criteria);
+        $this->assertCount(9, $result);
     }
 
     public function testQueryWithAppliedCriteria()
