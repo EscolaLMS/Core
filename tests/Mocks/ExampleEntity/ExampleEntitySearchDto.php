@@ -28,7 +28,11 @@ class ExampleEntitySearchDto extends CriteriaDto implements DtoContract, Instant
             $criteria->push(new EqualCriterion('status', $request->get('status')));
         }
         if ($request->get('gt_created_at')) {
-            $criteria->push(new DateCriterion('created_at', $request->get('gt_created_at'), '>='));
+            $criteria->push(new DateCriterion(
+                'created_at',
+                new Carbon($request->get($request->get('gt_created_at'))),
+                '>'
+            ));
         }
         if ($request->get('from') || $request->get('to')) {
             $criteria->push(new PeriodCriterion(

@@ -19,8 +19,8 @@ class CriteriaApiTest extends TestCase
             ->count(10)
             ->create();
 
-        $response = $this->json('GET', 'api/core');
-        $response->assertJsonCount(10, 'data');
+        $response = $this->json('GET', 'api/core?limit=5');
+        $response->assertJsonCount(5, 'data');
     }
 
     public function testDateCriterion()

@@ -5,6 +5,9 @@ namespace EscolaLms\Core\Tests\Features;
 use EscolaLms\Core\Dtos\PaginationDto;
 use EscolaLms\Core\Models\User;
 use EscolaLms\Core\Repositories\Criteria\Primitives\EqualCriterion;
+use EscolaLms\Core\Repositories\Criteria\Primitives\ModelCriterion;
+use EscolaLms\Core\Repositories\Criteria\UserCriterion;
+use EscolaLms\Core\Repositories\Criteria\UserSearchCriterion;
 use EscolaLms\Core\Tests\Mocks\BaseRepository;
 use EscolaLms\Core\Tests\Mocks\CompareDto;
 use EscolaLms\Core\Tests\Mocks\UpdateDto;
@@ -12,12 +15,13 @@ use EscolaLms\Core\Tests\TestCase;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class BaseRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseTransactions, WithFaker;
 
     protected BaseRepository $repository;
     protected User $user;
@@ -28,6 +32,8 @@ class BaseRepositoryTest extends TestCase
         parent::setUp();
         $this->repository = app(BaseRepository::class);
         $this->user = User::factory()->create([
+            'first_name' => $this->faker->firstName . $this->faker->numberBetween(),
+            'last_name' => $this->faker->lastName . $this->faker->numberBetween(),
             'country' => 'Old Country'
         ]);
         $users = User::factory()->count(8)->create();
@@ -163,6 +169,44 @@ class BaseRepositoryTest extends TestCase
         $this->assertTrue($collection instanceof Collection);
         $this->assertEquals(1, $collection->count());
         $this->assertEquals($this->user->email, $collection->first()->email);
+    }
+
+    public function testSearchByUserCriteria()
+    {
+        $criteria = [
+            new UserCriterion('id', $this->user)
+        ];
+        $result = $this->repository->searchByCriteria($criteria);
+        $this->assertCount(1, $result);
+        $this->assertEquals($this->user->getKey(), $result->first()->getKey());
+
+        $criteria = [
+            new UserSearchCriterion($this->user->first_name)
+        ];
+        $result = $this->repository->searchByCriteria($criteria);
+        $this->assertCount(1, $result);
+        $this->assertEquals($this->user->first_name, $result->first()->first_name);
+
+        $criteria = [
+            new UserSearchCriterion($this->user->last_name)
+        ];
+        $result = $this->repository->searchByCriteria($criteria);
+        $this->assertCount(1, $result);
+        $this->assertEquals($this->user->last_name, $result->first()->last_name);
+
+        $criteria = [
+            new UserSearchCriterion($this->user->email)
+        ];
+        $result = $this->repository->searchByCriteria($criteria);
+        $this->assertCount(1, $result);
+        $this->assertEquals($this->user->email, $result->first()->email);
+
+        $criteria = [
+            new ModelCriterion('id', $this->user)
+        ];
+        $result = $this->repository->searchByCriteria($criteria);
+        $this->assertCount(1, $result);
+        $this->assertEquals($this->user->getKey(), $result->first()->getKey());
     }
 
     public function testQueryWithAppliedCriteria()

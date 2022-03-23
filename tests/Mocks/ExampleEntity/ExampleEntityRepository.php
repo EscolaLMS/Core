@@ -4,14 +4,7 @@ namespace EscolaLms\Core\Tests\Mocks\ExampleEntity;
 
 use EscolaLms\Core\Dtos\OrderDto;
 use EscolaLms\Core\Dtos\PaginationDto;
-use EscolaLms\Core\Dtos\PeriodDto;
 use EscolaLms\Core\Repositories\BaseRepository as CoreBaseRepository;
-use EscolaLms\Core\Repositories\Criteria\PeriodCriterion;
-use EscolaLms\Core\Repositories\Criteria\Primitives\DateCriterion;
-use EscolaLms\Core\Repositories\Criteria\Primitives\EqualCriterion;
-use EscolaLms\Core\Repositories\Criteria\Primitives\InCriterion;
-use EscolaLms\Core\Repositories\Criteria\Primitives\IsNullCriterion;
-use EscolaLms\Core\Repositories\Criteria\Primitives\LikeCriterion;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ExampleEntityRepository extends CoreBaseRepository
