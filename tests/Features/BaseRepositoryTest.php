@@ -84,6 +84,11 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals(5, $collection->count());
         $this->assertEquals($this->user->email, $collection->first()->email);
         $this->assertNotEquals($this->last_user->email, $collection->last()->email);
+
+        $dto = new PaginationDto(null, 10);
+        $collection = $this->repository->allPaginated($dto);
+
+        $this->assertEquals(10, $collection->count());
     }
 
     // TODO: Check why all() and allWithOrder() do same thing, just have different order of parameters... BaseRepository is in dire need of some cleanup and refactor.

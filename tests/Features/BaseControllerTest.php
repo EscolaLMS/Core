@@ -127,4 +127,13 @@ class BaseControllerTest extends TestCase
         $this->assertEquals(10, $array['meta']['total']);
         $this->assertEquals(200, $response->getStatusCode());
     }
+
+    public function testUserAttribute()
+    {
+        $user = User::factory()->create();
+
+        $this->assertEquals("{$user->first_name} {$user->last_name}", $user->name);
+        $this->assertEquals(null, $user->avatarUrl);
+        $this->assertEquals(! is_null($user->email_verified_at), $user->emailVerified);
+    }
 }
