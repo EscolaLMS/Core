@@ -21,6 +21,8 @@ use EscolaLms\Core\Repositories\Criteria\UserSearchCriterion;
 use EscolaLms\Core\Tests\Mocks\BaseRepository;
 use EscolaLms\Core\Tests\Mocks\CompareDto;
 use EscolaLms\Core\Tests\Mocks\UpdateDto;
+use EscolaLms\Core\Tests\Repositories\TestUser;
+use EscolaLms\Core\Tests\Repositories\UserRepository;
 use EscolaLms\Core\Tests\TestCase;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -274,6 +276,22 @@ class BaseRepositoryTest extends TestCase
         $this->last_user->assignRole(UserRole::STUDENT);
 
         $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(1, $collection->count());
+    }
+
+    public function testUserGetActive(): void
+    {
+        $userRepository = \App::make(UserRepository::class);
+        User::query()->update(['is_active' => false]);
+
+        $collection = $userRepository->getActive();
+
+        $this->assertEquals(0, $collection->count());
+
+        User::query()->first()->update(['is_active' => true]);
+
+        $collection = $userRepository->getActive();
 
         $this->assertEquals(1, $collection->count());
     }
