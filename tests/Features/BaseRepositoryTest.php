@@ -12,6 +12,10 @@ use EscolaLms\Core\Repositories\Criteria\Primitives\DoesntHasCriterion;
 use EscolaLms\Core\Repositories\Criteria\Primitives\EqualCriterion;
 use EscolaLms\Core\Repositories\Criteria\Primitives\HasCriterion;
 use EscolaLms\Core\Repositories\Criteria\Primitives\ModelCriterion;
+use EscolaLms\Core\Repositories\Criteria\Primitives\NotNullCriterion;
+use EscolaLms\Core\Repositories\Criteria\Primitives\WhereCriterion;
+use EscolaLms\Core\Repositories\Criteria\Primitives\WhereNotInOrIsNullCriterion;
+use EscolaLms\Core\Repositories\Criteria\RoleCriterion;
 use EscolaLms\Core\Repositories\Criteria\UserCriterion;
 use EscolaLms\Core\Repositories\Criteria\UserSearchCriterion;
 use EscolaLms\Core\Tests\Mocks\BaseRepository;
@@ -201,15 +205,77 @@ class BaseRepositoryTest extends TestCase
 
     public function testSearchByCriteria(): void
     {
-        $criteria = [
-            new EqualCriterion('email', $this->user->email)
-        ];
+        $criteria = [new EqualCriterion('email', $this->user->email)];
 
         $collection = $this->repository->searchByCriteria($criteria);
 
         $this->assertTrue($collection instanceof Collection);
         $this->assertEquals(1, $collection->count());
         $this->assertEquals($this->user->email, $collection->first()->email);
+    }
+
+    public function testSearchByNotNullCriterion(): void
+    {
+        User::query()->whereNotNull('phone')->update(['phone' => null]);
+        $criteria = [new NotNullCriterion('phone')];
+
+        $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(0, $collection->count());
+
+        $this->user = User::factory()->create(['phone' => '123123123']);
+
+        $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(1, $collection->count());
+    }
+
+    public function testSearchByWhereCriterion(): void
+    {
+        User::query()->whereNotNull('phone')->update(['phone' => null]);
+        $criteria = [new WhereCriterion('phone', '123123123', '=')];
+
+        $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(0, $collection->count());
+
+        $this->user = User::factory()->create(['phone' => '123123123']);
+
+        $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(1, $collection->count());
+    }
+
+    public function testSearchByWhereNotInOrIsNullCriterion(): void
+    {
+        User::query()->update(['phone' => '123123123']);
+        $criteria = [new WhereNotInOrIsNullCriterion('phone', ['123123123'])];
+
+        $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(0, $collection->count());
+
+        $this->user = User::factory()->create(['phone' => null]);
+        $this->user = User::factory()->create(['phone' => '333444555']);
+
+        $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(2, $collection->count());
+    }
+
+    public function testSearchByRoleCriterion(): void
+    {
+        $criteria = [new RoleCriterion(UserRole::STUDENT)];
+
+        $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(0, $collection->count());
+
+        $this->last_user->assignRole(UserRole::STUDENT);
+
+        $collection = $this->repository->searchByCriteria($criteria);
+
+        $this->assertEquals(1, $collection->count());
     }
 
     public function testSearchByUserCriteria(): void
