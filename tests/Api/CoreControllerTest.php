@@ -11,7 +11,7 @@ class CoreControllerTest extends TestCase
     use CreatesUsers;
     use DatabaseTransactions;
 
-    public function testPackages()
+    public function testPackages(): void
     {
         $admin = $this->makeAdmin();
 

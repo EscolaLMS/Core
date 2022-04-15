@@ -22,7 +22,7 @@ class BaseControllerTest extends TestCase
         $this->controller = app(TestController::class);
     }
 
-    public function testSendResponse()
+    public function testSendResponse(): void
     {
 
         $response = $this->controller->sendResponse([
@@ -52,7 +52,7 @@ class BaseControllerTest extends TestCase
         $this->assertEquals(400, $response->getStatusCode());
     }
 
-    public function testSendError()
+    public function testSendError(): void
     {
         $response = $this->controller->sendError('test-message');
 
@@ -63,7 +63,7 @@ class BaseControllerTest extends TestCase
         $this->assertEquals(404, $response->getStatusCode());
     }
 
-    public function testSendSuccess()
+    public function testSendSuccess(): void
     {
         $response = $this->controller->sendSuccess('test-message');
 
@@ -74,7 +74,7 @@ class BaseControllerTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testSendResponseForResource()
+    public function testSendResponseForResource(): void
     {
         $resource = new JsonResource([
             'test-key' => 'test-value'
@@ -92,7 +92,7 @@ class BaseControllerTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testSendResponseForResourceUser()
+    public function testSendResponseForResourceUser(): void
     {
         $user = User::factory()->create();
         $resource = new JsonResource($user);
@@ -115,7 +115,7 @@ class BaseControllerTest extends TestCase
         $this->assertEquals(201, $response->getStatusCode());
     }
 
-    public function testSendResponseForResourcePaginator()
+    public function testSendResponseForResourcePaginator(): void
     {
         $users = User::factory()->count(10)->create();
         $paginator = User::paginate();
@@ -126,5 +126,14 @@ class BaseControllerTest extends TestCase
         $this->assertCount(10, $array['data']);
         $this->assertEquals(10, $array['meta']['total']);
         $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testUserAttribute(): void
+    {
+        $user = User::factory()->create();
+
+        $this->assertEquals("{$user->first_name} {$user->last_name}", $user->name);
+        $this->assertEquals(null, $user->avatarUrl);
+        $this->assertEquals(! is_null($user->email_verified_at), $user->emailVerified);
     }
 }

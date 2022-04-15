@@ -13,7 +13,7 @@ class CriteriaApiTest extends TestCase
 {
     use DatabaseTransactions, WithFaker;
 
-    public function testPagination()
+    public function testPagination(): void
     {
         ExampleEntity::factory()
             ->count(10)
@@ -23,7 +23,7 @@ class CriteriaApiTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
-    public function testDateCriterion()
+    public function testDateCriterion(): void
     {
         $date = Carbon::now()->addDays(5);
 
@@ -40,7 +40,7 @@ class CriteriaApiTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
-    public function testLikeCriterion()
+    public function testLikeCriterion(): void
     {
         ExampleEntity::factory()
             ->count(5)
@@ -54,7 +54,7 @@ class CriteriaApiTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
-    public function testInCriterion()
+    public function testInCriterion(): void
     {
         $ids = ExampleEntity::factory()
             ->count(5)
@@ -70,7 +70,7 @@ class CriteriaApiTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
-    public function testIsNullCriterion()
+    public function testIsNullCriterion(): void
     {
         ExampleEntity::factory()
             ->count(5)
@@ -84,7 +84,7 @@ class CriteriaApiTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
-    public function testEqualsCriterion()
+    public function testEqualsCriterion(): void
     {
         ExampleEntity::factory()
             ->count(5)
@@ -98,7 +98,7 @@ class CriteriaApiTest extends TestCase
         $response->assertJsonCount(5, 'data');
     }
 
-    public function testPeriodCriterion()
+    public function testPeriodCriterion(): void
     {
         $dateFrom = Carbon::now();
         $dateTo = Carbon::now()->addDays(5);
@@ -123,7 +123,7 @@ class CriteriaApiTest extends TestCase
         $response->assertJsonCount(10, 'data');
     }
 
-    public function testPeriodDto()
+    public function testPeriodDto(): void
     {
         $dateFrom = Carbon::now();
         $dateTo = Carbon::now()->addDays(5);
