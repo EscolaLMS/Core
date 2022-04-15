@@ -2,7 +2,10 @@
 
 namespace EscolaLms\Core\Tests\Features;
 
+use Carbon\Carbon;
+use EscolaLms\Core\Dtos\OrderDto;
 use EscolaLms\Core\Dtos\PaginationDto;
+use EscolaLms\Core\Dtos\PeriodDto;
 use EscolaLms\Core\Enums\UserRole;
 use EscolaLms\Core\Models\User;
 use EscolaLms\Core\Repositories\Criteria\Primitives\DoesntHasCriterion;
@@ -44,7 +47,7 @@ class BaseRepositoryTest extends TestCase
         $this->last_user = User::factory()->create();
     }
 
-    public function testPaginate()
+    public function testPaginate(): void
     {
         /** @var LengthAwarePaginator $paginator */
         $paginator = $this->repository->paginate(10);
@@ -56,7 +59,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->getKey(), $firstResult->getKey());
     }
 
-    public function testAllQuery()
+    public function testAllQuery(): void
     {
         $query = $this->repository->allQuery(['email' => $this->user->email]);
         $this->assertTrue($query instanceof Builder);
@@ -66,7 +69,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->email, $collection->first()->email);
     }
 
-    public function testAll()
+    public function testAll(): void
     {
         $collection = $this->repository->all([], null, null, ['*'], 'desc', 'id');
         $this->assertTrue($collection instanceof Collection);
@@ -76,7 +79,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->email, $collection->last()->email);
     }
 
-    public function testAllPaginated()
+    public function testAllPaginated(): void
     {
         $dto = new PaginationDto(0, 5);
         $collection = $this->repository->allPaginated($dto);
@@ -91,8 +94,21 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals(10, $collection->count());
     }
 
+    public function testPaginatedGetPage(): void
+    {
+        $dto = new PaginationDto(10, 50);
+
+        $this->assertEquals(5, $dto->getPage());
+
+        $this->assertEquals(["skip" => 10, "limit" => 50], $dto->toArray());
+
+        $dto = new PaginationDto(null, 50);
+
+        $this->assertEquals(0, $dto->getPage());
+    }
+
     // TODO: Check why all() and allWithOrder() do same thing, just have different order of parameters... BaseRepository is in dire need of some cleanup and refactor.
-    public function testAllWithOrder()
+    public function testAllWithOrder(): void
     {
         $collection = $this->repository->allWithOrder([], 0, 5, 'id', 'desc');
         $this->assertTrue($collection instanceof Collection);
@@ -102,7 +118,23 @@ class BaseRepositoryTest extends TestCase
         $this->assertNotEquals($this->user->email, $collection->last()->email);
     }
 
-    public function testAllInUserContextQuery()
+    public function testOrderDtoToArray(): void
+    {
+        $dto = new OrderDto('id', 'desc');
+
+        $this->assertEquals(["order_by" => "id", "order" => "desc"], $dto->toArray());
+    }
+
+    public function testPeriodDtoToArray(): void
+    {
+        $from = Carbon::now()->addDays(5);
+        $to = Carbon::now()->addDays(10);
+        $dto = new PeriodDto($from, $to);
+
+        $this->assertEquals(["from" => $from, "to" => $to], $dto->toArray());
+    }
+
+    public function testAllInUserContextQuery(): void
     {
         $query = $this->repository->allInUserContextQuery($this->user, [], null, null, ['*'], 'id');
         $this->assertTrue($query instanceof Builder);
@@ -112,7 +144,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->email, $collection->first()->email);
     }
 
-    public function testAllInUserContext()
+    public function testAllInUserContext(): void
     {
         $collection = $this->repository->allInUserContext($this->user, [], null, null, ['*'], 'id');
 
@@ -121,7 +153,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->email, $collection->first()->email);
     }
 
-    public function testAllIn()
+    public function testAllIn(): void
     {
         $collection = $this->repository->allIn('id', new Collection([$this->user->id, $this->last_user->id]));
 
@@ -131,7 +163,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertTrue($collection->contains('id', '=', $this->last_user->getKey()));
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $user = User::factory()->make();
 
@@ -143,7 +175,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     // This test makes zero sense in this context ¯\_(ツ)_/¯ because user has no relation to other users
-    public function testCreateAsUser()
+    public function testCreateAsUser(): void
     {
         /** @var User */
         $user = User::factory()->make();
@@ -155,7 +187,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($user->email, $user2->email);
     }
 
-    public function testCreateUsingModel()
+    public function testCreateUsingModel(): void
     {
         /** @var User */
         $user = User::factory()->make();
@@ -167,7 +199,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($user->email, $user2->email);
     }
 
-    public function testSearchByCriteria()
+    public function testSearchByCriteria(): void
     {
         $criteria = [
             new EqualCriterion('email', $this->user->email)
@@ -180,7 +212,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->email, $collection->first()->email);
     }
 
-    public function testSearchByUserCriteria()
+    public function testSearchByUserCriteria(): void
     {
         $criteria = [
             new UserCriterion('id', $this->user)
@@ -218,7 +250,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->getKey(), $result->first()->getKey());
     }
 
-    public function testSearchByRoles()
+    public function testSearchByRoles(): void
     {
         $criteria = [
             new HasCriterion('roles', fn ($query) => $query->where('name', UserRole::ADMIN))
@@ -241,7 +273,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertCount(9, $result);
     }
 
-    public function testQueryWithAppliedCriteria()
+    public function testQueryWithAppliedCriteria(): void
     {
 
         $criteria = [
@@ -259,7 +291,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->email, $collection->first()->email);
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $this->assertDatabaseHas($this->user->getTable(), [$this->user->getKeyName() => $this->user->getKey()]);
         $this->repository->remove($this->user);
@@ -267,7 +299,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     // TODO: What even is the purpose / use-case of this method? And why does it return object and not array?
-    public function testGetEmptyColumns()
+    public function testGetEmptyColumns(): void
     {
         $columns = $this->repository->getEmptyColumns();
 
@@ -276,7 +308,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertObjectHasAttribute('last_name', $columns);
     }
 
-    public function testFind()
+    public function testFind(): void
     {
         $model = $this->repository->find($this->user->getKey());
 
@@ -285,7 +317,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($this->user->email, $model->email);
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $new_email = 'new-email@test.test';
         $this->assertNotEquals($new_email, $this->user->email);
@@ -300,7 +332,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($new_email, $this->user->email);
     }
 
-    public function testUpdateUsingDto()
+    public function testUpdateUsingDto(): void
     {
         $new_email = 'new-email@test.test';
         $this->assertNotEquals($new_email, $this->user->email);
@@ -319,7 +351,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($old_country, $this->user->country);
     }
 
-    public function testUpdateUsingDtoIgnoreEmpty()
+    public function testUpdateUsingDtoIgnoreEmpty(): void
     {
         $new_email = 'new-email@test.test';
         $this->assertNotEquals($new_email, $this->user->email);
@@ -340,7 +372,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     // Another test that makes zero sense in this context
-    public function testUpdateAsUser()
+    public function testUpdateAsUser(): void
     {
         /** @var User */
         $user = User::factory()->make();
@@ -354,7 +386,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($user->email, $model->email);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->assertDatabaseHas($this->user->getTable(), [$this->user->getKeyName() => $this->user->getKey()]);
         $this->repository->delete($this->user->getKey());
@@ -362,7 +394,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     // Another test that makes zero sense in this context
-    public function testDeleteAsUser()
+    public function testDeleteAsUser(): void
     {
         $this->assertDatabaseHas($this->user->getTable(), [$this->user->getKeyName() => $this->user->getKey()]);
         $this->repository->deleteAsUser($this->user->getKey(), $this->user, 'id');
@@ -370,7 +402,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     // TODO: check if this method is even used anywhere, because it's naming has nothing to do with how HTTP Patch should work. This is just an updateOrCreate with identyfying data set in DTO instead of array. And it can't hold partial data because create will fail on required/not null fields.
-    public function testPatch()
+    public function testPatch(): void
     {
         $new_country = 'New Country';
         $this->assertNotEquals($new_country, $this->user->country);
@@ -387,7 +419,7 @@ class BaseRepositoryTest extends TestCase
         $this->assertEquals($new_country, $this->user->country);
     }
 
-    public function testDeleteWhere()
+    public function testDeleteWhere(): void
     {
         $this->assertDatabaseHas($this->user->getTable(), [$this->user->getKeyName() => $this->user->getKey()]);
         $this->repository->deleteWhere(['email' => $this->user->email]);
@@ -395,12 +427,12 @@ class BaseRepositoryTest extends TestCase
     }
 
     // TODO: this method was probably not even used anywhere as it didn't return anything in BaseRepository because of an error
-    public function testCount()
+    public function testCount(): void
     {
         $this->assertEquals(10, $this->repository->count());
     }
 
-    public function testCountByCriteria()
+    public function testCountByCriteria(): void
     {
         $criteria = [
             new EqualCriterion('email', $this->user->email)
@@ -414,7 +446,7 @@ class BaseRepositoryTest extends TestCase
     }
 
     // TODO: we probably should just create a `whereLike` method in query builder that uses always correct LIKE method
-    public function testLikeParam()
+    public function testLikeParam(): void
     {
         $dbDriver = DB::connection()->getPdo()->getAttribute(\PDO::ATTR_DRIVER_NAME);
         $result = $this->repository->likeParam('lorem');

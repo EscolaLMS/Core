@@ -8,7 +8,7 @@ use EscolaLms\Core\Tests\TestCase;
 
 class BasicEnumTest extends TestCase
 {
-    public function testStatusEnum()
+    public function testStatusEnum(): void
     {
         $this->assertEquals([0 => "INACTIVE",1 => "ACTIVE"], StatusEnum::getAssoc());
         $this->assertEquals(2, StatusEnum::getDetails()->count());
@@ -20,7 +20,7 @@ class BasicEnumTest extends TestCase
         $this->assertEquals(0, StatusEnum::getValue("INACTIVE"));
     }
 
-    public function testUserRole()
+    public function testUserRole(): void
     {
         $this->assertEquals(["student" => "STUDENT","tutor" => "TUTOR","admin" => "ADMIN"], UserRole::getAssoc());
         $this->assertEquals(3, UserRole::getDetails()->count());

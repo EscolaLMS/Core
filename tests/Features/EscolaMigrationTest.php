@@ -11,7 +11,7 @@ use RuntimeException;
 
 class EscolaMigrationTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $migrate = new EscolaMigration();
         Schema::dropIfExists('abc_test');
@@ -27,7 +27,7 @@ class EscolaMigrationTest extends TestCase
         Schema::dropIfExists('abc_test');
     }
 
-    public function testDuplicateTable()
+    public function testDuplicateTable(): void
     {
         $migrate = new EscolaMigration();
         Schema::dropIfExists('abc_test');
