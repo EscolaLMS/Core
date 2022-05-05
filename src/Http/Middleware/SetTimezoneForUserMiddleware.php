@@ -3,6 +3,7 @@
 namespace EscolaLms\Core\Http\Middleware;
 
 use Closure;
+use EscolaLms\Core\Models\User;
 use Illuminate\Http\Request;
 
 class SetTimezoneForUserMiddleware
@@ -17,7 +18,7 @@ class SetTimezoneForUserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = auth()->user();
+        $user = User::whereId(auth()->user()->getKey())->first();
         $user->current_timezone = $request->header('CURRENT_TIMEZONE', 'UTC');
         $user->save();
         return $next($request);
