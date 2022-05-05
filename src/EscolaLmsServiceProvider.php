@@ -2,10 +2,8 @@
 
 namespace EscolaLms\Core;
 
-use EscolaLms\Core\Http\Facades\Route;
 use EscolaLms\Core\Http\Middleware\SetTimezoneForUserMiddleware;
 use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class EscolaLmsServiceProvider extends ServiceProvider
