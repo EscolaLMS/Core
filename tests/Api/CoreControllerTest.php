@@ -35,12 +35,14 @@ class CoreControllerTest extends TestCase
             'CURRENT_TIMEZONE' => $timezone
         ]);
         $response->assertOk();
+        $admin->refresh();
         $this->assertTrue($admin->current_timezone === $timezone);
         $timezone = 'America/New_York';
         $response = $this->actingAs($admin, 'api')->json('GET', 'api/core/packages', [], [
             'CURRENT_TIMEZONE' => $timezone
         ]);
         $response->assertOk();
+        $admin->refresh();
         $this->assertTrue($admin->current_timezone === $timezone);
     }
 }
