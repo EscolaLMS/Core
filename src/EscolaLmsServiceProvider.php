@@ -4,6 +4,7 @@ namespace EscolaLms\Core;
 
 use EscolaLms\Core\Http\Facades\Route;
 use EscolaLms\Core\Http\Middleware\SetTimezoneForUserMiddleware;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,9 +20,8 @@ class EscolaLmsServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $router = $this->app->make(Router::class);
-        $router->aliasMiddleware('set_timezone', SetTimezoneForUserMiddleware::class);
-        Route::extend('set_timezone');
+        $this->app->make(Kernel::class)
+            ->pushMiddleware(SetTimezoneForUserMiddleware::class);
 
         $this->loadConfig();
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
