@@ -3,6 +3,7 @@
   "source": {
     "directories": ["src"]
   },
+  "timeout": 15,
   "mutators": {
     "@default": true
   },
