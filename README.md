@@ -7,6 +7,7 @@
 [![downloads](https://img.shields.io/packagist/l/escolalms/core)](https://packagist.org/packages/escolalms/core)
 [![Maintainability](https://api.codeclimate.com/v1/badges/382375bb6a8ee96d9875/maintainability)](https://codeclimate.com/github/EscolaLMS/Core/maintainability)
 [![swagger](https://img.shields.io/badge/documentation-swagger-green)](https://escolalms.github.io/Core/)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FEscolaLMS%2FCore%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/EscolaLMS/Core/main)
 
 Escola LMS Core Package
 
