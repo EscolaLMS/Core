@@ -40,8 +40,8 @@ jobs:
 
       - name: Require composer infection package
         run: |
+          composer config --no-plugins allow-plugins.infection/extension-installer
           composer require infection/infection:^0
-          composer config --no-interaction allow-plugins.infection/infection true
 
       - name: Clear config
         run: vendor/bin/testbench config:clear
