@@ -98,7 +98,7 @@ abstract class BasicEnum extends Enum
      * @return mixed
      * @throws \ReflectionException
      */
-    public static function getValue(string $name)
+    public static function getValue(string $name) :?string
     {
         if (self::isValidName($name)) {
             return parent::getValue(Str::upper($name));
