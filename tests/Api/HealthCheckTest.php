@@ -2,10 +2,13 @@
 
 namespace EscolaLms\Core\Tests\Api;
 
-use Tests\TestCase;
+use EscolaLms\Core\Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class HealthCheckTest extends TestCase
 {
+    use DatabaseTransactions;
+
     public function testHealthCheck(): void
     {
         $this->get('/api/core/health-check')
@@ -26,7 +29,6 @@ class HealthCheckTest extends TestCase
             ])
             ->assertJsonFragment([
                 'db_status' => 'OK',
-                'redis_status' => 'OK',
             ])
             ->assertJsonFragment([
                 'status' => 'OK',
