@@ -3,11 +3,19 @@
 namespace EscolaLms\Core;
 
 use EscolaLms\Core\Http\Middleware\SetTimezoneForUserMiddleware;
+use EscolaLms\Core\Services\Contracts\HealthCheckServiceContract;
+use EscolaLms\Core\Services\HealthCheckService;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 
 class EscolaLmsServiceProvider extends ServiceProvider
 {
+    public const SERVICES = [
+        HealthCheckServiceContract::class => HealthCheckService::class,
+    ];
+
+    public array $bindings = self::SERVICES;
+
     public function register()
     {
         if (!$this->app->getProviders(\EscolaLms\ModelFields\ModelFieldsServiceProvider::class)
@@ -29,7 +37,7 @@ class EscolaLmsServiceProvider extends ServiceProvider
     private function loadConfig(): void
     {
         $this->publishes([
-            __DIR__ . '/config.php' => config_path('escolalms/core.php')
+            __DIR__ . '/config.php' => config_path('escolalms/core.php'),
         ], 'escolalms');
 
         $this->mergeConfigFrom(
@@ -52,7 +60,7 @@ class EscolaLmsServiceProvider extends ServiceProvider
     private function loadMigrations(): void
     {
         $this->publishes([
-            __DIR__ . '/../database/migrations' => database_path('migrations')
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
         ], 'escolalms');
 
         if (!config('escolalms.core.ignore_migrations')) {
