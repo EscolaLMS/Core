@@ -387,9 +387,9 @@ class BaseRepositoryTest extends TestCase
     {
         $columns = $this->repository->getEmptyColumns();
 
-        $this->assertObjectHasAttribute('email', $columns);
-        $this->assertObjectHasAttribute('first_name', $columns);
-        $this->assertObjectHasAttribute('last_name', $columns);
+        $this->assertObjectHasProperty('email', $columns);
+        $this->assertObjectHasProperty('first_name', $columns);
+        $this->assertObjectHasProperty('last_name', $columns);
     }
 
     public function testFind(): void
