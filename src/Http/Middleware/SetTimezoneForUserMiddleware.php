@@ -8,21 +8,17 @@ use Illuminate\Http\Request;
 
 class SetTimezoneForUserMiddleware
 {
-
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
     public function handle(Request $request, Closure $next)
     {
+        /** @var ?User $user */
         $user = auth()->user() ? User::whereId(auth()->user()->getKey())->first() : null;
-        if ($user) {
-            $user->current_timezone = $request->header('CURRENT-TIMEZONE', 'UTC');
+        $currentTimezone = $request->header('CURRENT-TIMEZONE', 'UTC');
+
+        if ($user && $user->current_timezone !== $currentTimezone) {
+            $user->current_timezone = $currentTimezone;
             $user->save();
         }
+
         return $next($request);
     }
 }
