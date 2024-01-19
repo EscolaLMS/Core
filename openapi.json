@@ -27,6 +27,44 @@
                     }
                 ]
             }
+        },
+        "/api/health-check": {
+            "get": {
+                "tags": [
+                    "Api"
+                ],
+                "summary": "Check health of the application",
+                "operationId": "cfb975a1bf569c2ecf8fbdfaabad45bd",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "db_status": {
+                                                "type": "string"
+                                            },
+                                            "redis_status": {
+                                                "type": "string"
+                                            },
+                                            "cpu_usage": {
+                                                "type": "string"
+                                            },
+                                            "disk": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
