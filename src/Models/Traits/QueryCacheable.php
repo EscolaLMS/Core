@@ -9,4 +9,5 @@ trait QueryCacheable
     use BaseQueryCacheable;
 
     public $cacheFor = 3600;
+    protected static $flushCacheOnUpdate = true;
 }
