@@ -12,9 +12,8 @@ class SetTimezoneForUserMiddleware
     {
         /** @var ?User $user */
         $user = auth()->user() ? User::whereId(auth()->user()->getKey())->first() : null;
-        $currentTimezone = $request->header('CURRENT-TIMEZONE', 'UTC');
-
-        if ($user && $user->current_timezone !== $currentTimezone) {
+        $currentTimezone = $request->header('CURRENT-TIMEZONE');
+        if ($currentTimezone && $user && $user->current_timezone !== $currentTimezone) {
             $user->current_timezone = $currentTimezone;
             $user->save();
         }
