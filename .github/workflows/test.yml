@@ -72,6 +72,9 @@ jobs:
       - name: Publish things
         run: vendor/bin/testbench migrate:fresh
 
+      - name: Passport install
+        run: vendor/bin/testbench passport:install --no-interaction
+
       - name: Run tests
         run: vendor/bin/phpunit
 
