@@ -17,7 +17,8 @@ class InstallPassport extends EscolaMigration
      */
     public function up()
     {
-        Artisan::call('passport:install');
+        // for backward compatibility
+        // Artisan::call('passport:install');
     }
 
     /**
