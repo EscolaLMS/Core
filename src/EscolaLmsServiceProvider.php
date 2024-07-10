@@ -18,6 +18,7 @@ class EscolaLmsServiceProvider extends ServiceProvider
 
     public function register()
     {
+        // @phpstan-ignore-next-line
         if (!$this->app->getProviders(\EscolaLms\ModelFields\ModelFieldsServiceProvider::class)
             && class_exists(\EscolaLms\ModelFields\ModelFieldsServiceProvider::class)) {
             $this->app->register(\EscolaLms\ModelFields\ModelFieldsServiceProvider::class);

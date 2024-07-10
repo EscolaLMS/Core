@@ -12,4 +12,5 @@ namespace EscolaLms\Core\Dtos\Contracts;
 interface CompareDtoContract
 {
     public function identifier(): array;
+    public function toArray(): array;
 }

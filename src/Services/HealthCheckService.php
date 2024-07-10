@@ -43,6 +43,7 @@ class HealthCheckService implements HealthCheckServiceContract
     {
         try {
             return sys_getloadavg()[0];
+            // @phpstan-ignore-next-line
         } catch (\Exception $e) {
             return 'Failed to get CPU usage: ' . $e->getMessage();
         }

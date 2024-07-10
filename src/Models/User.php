@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property string $current_timezone
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $path_avatar
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasRoles, HasApiTokens, HasFactory;
@@ -17,14 +23,14 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -32,10 +38,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'password_reset_token',
     ];
 
+    /**
+     * @var array<int, string>
+     */
     protected $appends = [
         'avatar_url',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'is_active' => 'boolean',
         'onboarding_completed' => 'boolean',

@@ -74,7 +74,7 @@ abstract class BasicEnum extends Enum
     /**
      * @param $value
      *
-     * @return mixed
+     * @return string|null
      * @throws \ReflectionException
      */
     public static function getName($value, ?callable $filterCallback = null): ?string
@@ -95,10 +95,10 @@ abstract class BasicEnum extends Enum
     /**
      * @param string $name
      *
-     * @return mixed
+     * @return string|null
      * @throws \ReflectionException
      */
-    public static function getValue(string $name) :?string
+    public static function getValue(string $name): ?string
     {
         if (self::isValidName($name)) {
             return parent::getValue(Str::upper($name));

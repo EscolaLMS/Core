@@ -302,8 +302,6 @@ abstract class BaseRepository implements BaseRepositoryContract, UserableReposit
      *
      * @param int $id
      * @param array $columns
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
      */
     public function find(int $id, array $columns = ['*']): ?Model
     {
@@ -317,8 +315,6 @@ abstract class BaseRepository implements BaseRepositoryContract, UserableReposit
      *
      * @param array $input
      * @param int $id
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
      */
     public function update(array $input, int $id): Model
     {
@@ -363,7 +359,7 @@ abstract class BaseRepository implements BaseRepositoryContract, UserableReposit
     /**
      * @param int $id
      *
-     * @return bool|mixed|null
+     * @return bool|null
      * @throws \Exception
      *
      */
