@@ -77,5 +77,15 @@
                 "scheme": "bearer"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Core Admin",
+            "description": "Core Admin"
+        },
+        {
+            "name": "Api",
+            "description": "Api"
+        }
+    ]
 }
