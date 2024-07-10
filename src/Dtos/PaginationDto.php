@@ -69,6 +69,6 @@ class PaginationDto implements DtoContract, InstantiateFromRequest
             return 0;
         }
 
-        return floor($this->limit / $this->skip);
+        return (int) floor($this->limit / $this->skip);
     }
 }

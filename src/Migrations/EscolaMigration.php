@@ -24,6 +24,11 @@ class EscolaMigration extends Migration
     public function create(string $table, \Closure $schema)
     {
         $this->avoidDuplicateTable($table);
-        return Schema::create($table, $schema);
+        Schema::create($table, $schema);
+    }
+
+    public function down()
+    {
+        //
     }
 }
