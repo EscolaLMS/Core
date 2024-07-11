@@ -15,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $first_name
  * @property string $last_name
  * @property string $path_avatar
+ * @property string $email
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
